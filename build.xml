@@ -1,0 +1,35 @@
+<project default="package">
+    <property file="project.properties"/>
+
+    <target name="init" depends="clean">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${dist.dir}"/>
+        <path id="lib">
+            <fileset dir="${lib.dir}"/>
+        </path>
+    </target>
+
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
+    </target>
+
+    <target name="compile" depends="init">
+        <javac  debug="true" srcdir="${src.dir}" destdir="${build.dir}">
+            <classpath refid="lib"/>
+        </javac>
+        <javac srcdir="${testsrc.dir}" destdir="${build.dir}"/>
+    </target>
+
+
+    <target name="package" depends="compile">
+        <jar basedir="${build.dir}"
+             jarfile="${dist.dir}/hccp-usage-map.jar"
+             manifest="${config.dir}/usage-map-manifest.mf"/>
+    </target>
+
+    <target name="run">
+
+    </target>
+</project>
