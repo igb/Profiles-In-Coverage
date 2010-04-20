@@ -29,7 +29,7 @@ public class UsageMapMethodAdapter extends MethodAdapter {
         super.visitCode();
 
 
-        if (!"org/hccp/instrument/UsageCounter".equals(className) && !className.startsWith("java/")) {
+        if (!"org/hccp/instrument/UsageCounter".equals(className) && !className.startsWith("java/") && !className.startsWith("sun/")) {
             super.visitMethodInsn(Opcodes.INVOKESTATIC, "org/hccp/instrument/UsageCounter", "getInstance", "()Lorg/hccp/instrument/UsageCounter;");
             super.visitLdcInsn(className + "." + methodName + "(" + methodDescriptor + ")");
             super.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "org/hccp/instrument/UsageCounter", "incrementCountForMethod", "(Ljava/lang/String;)V");

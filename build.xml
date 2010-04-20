@@ -7,6 +7,9 @@
         <path id="lib">
             <fileset dir="${lib.dir}"/>
         </path>
+        <path id="testlib">
+            <fileset dir="${testlib.dir}"/>
+        </path>
     </target>
 
 
@@ -16,10 +19,12 @@
     </target>
 
     <target name="compile" depends="init">
-        <javac  debug="true" srcdir="${src.dir}" destdir="${build.dir}">
+        <javac debug="true" srcdir="${src.dir}" destdir="${build.dir}">
             <classpath refid="lib"/>
         </javac>
-        <javac srcdir="${testsrc.dir}" destdir="${build.dir}"/>
+        <javac srcdir="${testsrc.dir}" destdir="${build.dir}">
+            <classpath refid="testlib"/>            
+        </javac>
     </target>
 
 
