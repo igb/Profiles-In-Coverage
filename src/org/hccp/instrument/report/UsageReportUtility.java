@@ -28,10 +28,14 @@ public class UsageReportUtility {
         in.close();
 
         Iterator itr = map.keySet().iterator();
+        int count=0;
+
         while (itr.hasNext()) {
             String method = (String) itr.next();
             System.out.println(method + " is called " + map.get(method) + " times.");
+            count+=(Integer)map.get(method);
         }
+        System.out.println("count = " + count);
     }
 
 
