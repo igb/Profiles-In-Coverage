@@ -20,6 +20,7 @@ public class UsageMapMethodAdapter extends MethodAdapter {
         this.className = className;
         this.methodName = methodName;
         this.methodDescriptor = methodDescriptor;
+        System.out.println("visited method " + getFullyQualifiedMethodName(className, methodName, methodDescriptor));
 
 
     }
@@ -31,8 +32,12 @@ public class UsageMapMethodAdapter extends MethodAdapter {
 
         if (!"org/hccp/instrument/UsageCounter".equals(className) && !className.startsWith("java/") && !className.startsWith("sun/")) {
             super.visitMethodInsn(Opcodes.INVOKESTATIC, "org/hccp/instrument/UsageCounter", "getInstance", "()Lorg/hccp/instrument/UsageCounter;");
-            super.visitLdcInsn(className + "." + methodName + "(" + methodDescriptor + ")");
+            super.visitLdcInsn(getFullyQualifiedMethodName(className, methodName, methodDescriptor));
             super.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "org/hccp/instrument/UsageCounter", "incrementCountForMethod", "(Ljava/lang/String;)V");
         }
+    }
+
+    private String getFullyQualifiedMethodName(String className, String methodName, String methodDescriptor) {
+        return className + "." + methodName + "(" + methodDescriptor + ")";
     }
 }

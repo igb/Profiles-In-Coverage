@@ -1,7 +1,7 @@
 package org.hccp.instrument;
 
 /**
- * java -javaagent:dist/hccp-usage-map.jar -cp dist/hccp-usage-map.jar:lib/asm-3.2.jar:lib/asm-util-3.2.jar  org.hccp.instrument.TestClass001
+  java -javaagent:dist/hccp-usage-map.jar -cp dist/hccp-usage-map.jar:lib/asm-3.2.jar:lib/asm-util-3.2.jar  org.hccp.instrument.TestClass001
  */
 public class TestClass001 {
 

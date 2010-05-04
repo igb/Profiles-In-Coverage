@@ -7,8 +7,9 @@
         <path id="lib">
             <fileset dir="${lib.dir}"/>
         </path>
-        <path id="testlib">
+        <path id="classpath.test">
             <fileset dir="${testlib.dir}"/>
+            <fileset dir="${build.dir}"/>
         </path>
     </target>
 
@@ -22,11 +23,16 @@
         <javac debug="true" srcdir="${src.dir}" destdir="${build.dir}">
             <classpath refid="lib"/>
         </javac>
-        <javac srcdir="${testsrc.dir}" destdir="${build.dir}">
-            <classpath refid="testlib"/>            
-        </javac>
     </target>
 
+
+
+    <target name="compile-test" depends="compile">
+
+        <javac srcdir="${testsrc.dir}" destdir="${build.dir}" debug="true">
+            <classpath refid="classpath.test"/>
+        </javac>
+    </target>
 
     <target name="package" depends="compile">
         <jar basedir="${build.dir}"
@@ -37,4 +43,27 @@
     <target name="run">
 
     </target>
+
+
+    <target name="test" depends="compile-test">
+
+         <junit haltonerror="true">
+
+             <classpath refid="classpath.test"/>
+             <classpath location="${build.dir}"/>
+             
+
+             <formatter type="brief" usefile="false"/>
+
+             <batchtest haltonerror="true">
+
+                 <fileset dir="${build.dir}" includes="**/*Test.class">
+
+                 </fileset>
+
+             </batchtest>
+         </junit>
+     </target>
+
+
 </project>

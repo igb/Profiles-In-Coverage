@@ -26,9 +26,38 @@
 	function init(){
 	    //init data
 	    var json = {
-	        children: [],
+	        children: [
+				{children: [
+					
+					{children: [
+						
+						{children: [
+							
+							{children: [
+								{children: [], data: { $area: "1", $color: "18"}, id: "doSomething(()V)", name: "doSomething(()V)" },
+								{children: [], data: { $area: "1", $color: "1"}, id: "&lt;init>(()V)", name: "&lt;init>(()V)" },
+								{children: [], data: { $area: "1", $color: "1"}, id: "main(([Ljava/lang/String;)V)", name: "main(([Ljava/lang/String;)V)" },
+								{children: [], data: { $area: "1", $color: "1"}, id: "doHttpViaThirdClass(()V)", name: "doHttpViaThirdClass(()V)" },
+								], data: { $area: "4", $color: "20"}, id: "TestClass001", name: "TestClass001" },
+							{children: [
+								{children: [], data: { $area: "1", $color: "18"}, id: "doAnotherThing(()I)", name: "doAnotherThing(()I)" },
+								{children: [], data: { $area: "1", $color: "2"}, id: "&lt;init>(()V)", name: "&lt;init>(()V)" }
+								
+								], data: { $area: "2", $color: "10"}, id: "TestClass002", name: "TestClass002" },
+							{children: [], data: { $area: "2", $color: "10"}, id: "TestClass003", name: "TestClass003" },
+							
+							], data: { $area: "8", $color: "40"}, id: "instrument", name: "instrument" }
+						
+						], data: { $area: "8", $color: "40"}, id: "hccp", name: "hccp" }
+					
+					], data: { $area: "8", $color: "40"}, id: "org", name: "org" },
+				{children: [], data: { $area: "11", $color: "10"}, id: "com", name: "com"}	
+	
+	
+	       
+	       ],
 	       data: {
-	            $area: 270
+	            $area: 19
 	        },
 	        id: "method activity",
 	        name: "method calls"
