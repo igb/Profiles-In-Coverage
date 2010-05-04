@@ -149,12 +149,20 @@ public class NodeDatabaseTest {
                 List<Node> instrumentChildren = instrument.getChildren();
                 assertEquals(2, instrumentChildren.size());
 
+                for (int j = 0; j < instrumentChildren.size(); j++) {
+                    Node node = instrumentChildren.get(j);
+                    assertTrue(node instanceof ClassFile);
+                    assertEquals(4, node.getAccessCount());
+                }
+
 
             } else if (root.getName().equals("com")) {
                 assertEquals(40, root.getAccessCount());
             }
+
+            System.out.println("db.toString() = \n" + db.toString());
         }
-        
+
 
     }
 

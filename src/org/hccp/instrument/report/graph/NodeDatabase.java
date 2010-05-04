@@ -53,5 +53,21 @@ public class NodeDatabase {
         }
     }
 
+    @Override
+    public String toString() {
+        return printDatabase(roots, 0, new StringBuffer());
+    }
 
+    private String  printDatabase(List<Node> nodes, int offset, StringBuffer buffer) {
+        for (int i = 0; i < nodes.size(); i++) {
+            Node node = nodes.get(i);
+            for (int j=0; j<= offset; j++) {
+                buffer.append(" ");
+            }
+            buffer.append(node.getName() + " (" + node.getAccessCount() + ")\n");
+            List<Node> children = node.getChildren();
+            printDatabase(children, offset + 1, buffer );
+        }
+        return buffer.toString();
+    }
 }
