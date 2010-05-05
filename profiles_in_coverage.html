@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<style type="text/css">
+	body {
+
+	font-family: arial;
+	font-size: 10pt;
+
+	}
+	td {
+
+	font-family: arial;
+	font-size: 10pt;
+	background: ffffff;
+	}
+
+
+	.footnote {
+
+	font-family: arial;
+	font-size: 7pt;
+
+	}
+
+	table {
+	background: black;
+
+	}
+
+	th {
+
+	background: ffffff;
+	font-family: arial;
+	font-size: 10pt;
+	font-weight: bold;
+
+	}
+	tt {
+
+	font-family: arial;
+	font-size: 8pt;
+
+	}
+	.footer {
+	    font-size: 10;
+	    font-weight: bold;
+
+	}
+	.feed {background: #eeeeff;}
+
+	.doc {
+	    border: 1px black dashed;
+	    padding: 3px;
+	    background: dddddd;
+	}
+	.command {
+	    font-style: italic;
+	}
+	pre {
+	    font-family: courier;
+	    font-size: 8pt;
+	    border-style: dashed;
+	    border-color: gray;
+	    border-width: 1px;
+	}
+
+	sup {
+	    font-size: 6pt;
+	}
+	</style>
+	<title>Profiles in Coverage: Quantitative Refactoring</title>
+</head>
+<body>
+	<h2>Profiles in Coverage: Quantitative Refactoring</h2>
+	<p>Coverage tools are a great way to see what parts of your code are accessed under certain conditions (for instance, what classes or methods are executed when you run a suite of unit tests). Profiling tools measure and find performance issues (i.e. what percent of time is spent in what classes or methods during a normal runtime of your application). From time to time, you need to mix both these types of tools together. Let me give you an example...</p>
+	<h3>The Legacy Classpath</h3>
+	<p>My current employer has been around for ~7 years. The primary product is a web application comprised of a number of services...each service is deployed as a Java web app. Each of these services has different endpoints and servlet paths descirbed by a web.xml unique to each service. The classpath for each of these apps, however, is identical...even though each web app instance resides in it's own standalone servlet container.</p>
+	<p>By factoring out  the shape or interface of an application from the classpath structure by way of the application configuration, one can create multiple applications or endpoints from a single codebase. It is not an uncommon approach in enterprisey software, and is arguably a nice feature of the Java webapp standard</p>
+	<p>However, a downside of this approach is seen when one attempts to refactor or re-implement one of these applications. Let's say, for example, there is a constituent webservice in this set of applications that would be better served by a non-Java implementation. Perhaps one of these services is highly parallelized and must run in compliance with a severe operational SLA -  domain arguably better suited to a language and runtime like Erlang. How easy is it to detemine what components and classes are to be replaces, refactored or deleted?</p>
+	<p>While the application's entry points (servlets and JSPs) are clearly defined by the Java web apps web.xml descriptor, the totality of the runtime dependencies or less clear. Some static dependency analysis can be performed, but throw in an inversion of control container like Spring or blarg, and things get complex in a hurry.</p>
+
+<p class="footer">
+5/5/2010</p>
+</body>
+</html> 
