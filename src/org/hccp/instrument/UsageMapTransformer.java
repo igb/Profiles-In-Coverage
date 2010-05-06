@@ -20,19 +20,12 @@ public class UsageMapTransformer implements ClassFileTransformer {
 
 
     public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
-        System.out.println("modified class: " + className);
+
         byte[] result = classfileBuffer;
         ClassReader reader = new ClassReader(classfileBuffer);
-
-
-
         ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
 
-        TraceClassVisitor traceClassVisitor = new TraceClassVisitor(writer, new PrintWriter(System.out));
-
-       // reader.accept(traceClassVisitor, ClassReader.SKIP_DEBUG);
-      reader.accept(new UsageMapClassAdapter(writer, className),ClassReader.EXPAND_FRAMES );
-
+        reader.accept(new UsageMapClassAdapter(writer, className),ClassReader.EXPAND_FRAMES );
         result = writer.toByteArray();
 
         return result;
