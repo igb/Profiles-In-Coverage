@@ -1,0 +1,30 @@
+<html>
+<body>
+	s
+<canvas id="canvas" width="300" height="300">s</canvas>
+<script>
+//get a reference to the canvas
+var ctx = canvas.getContext("2d");
+//draw a circle
+ctx.beginPath();
+//ctx.arc(75, 75, 10, 0, Math.PI*2, true); 
+ctx.rect(10, 10, 20, 20)
+ctx.closePath();
+ctx.stroke();
+
+ctx.beginPath();
+ctx.moveTo(30, 20);
+ctx.lineTo(50, 20);
+ctx.closePath();
+ctx.stroke();
+
+ctx.beginPath();
+ctx.moveTo(50, 20);
+ctx.lineTo(50, 50);
+ctx.closePath();
+ctx.stroke();
+
+
+</script>
+</body>
+</html>

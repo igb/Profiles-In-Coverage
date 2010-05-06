@@ -8,6 +8,54 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class NodeDatabaseTest {
+    public static final String[] DATA = new String[]{"org/hccp/instrument/TestClass001.doHttpViaThirdClass(()V)",
+            "org/hccp/instrument/TestClass003.doHttpRequest(()V)",
+            "com/slamd/http/HTTPRequest.<init>((ZLjava/net/URL;)V)",
+            "com/slamd/http/HTTPClient.<init>(()V)",
+            "com/slamd/http/HTTPClient.sendRequest((Lcom/slamd/http/HTTPRequest;)Lcom/slamd/http/HTTPResponse;)",
+            "com/slamd/http/HTTPClient.sendRequestInternal((Lcom/slamd/http/HTTPRequest;Z)Lcom/slamd/http/HTTPResponse;)",
+            "com/slamd/http/HTTPRequest.generateHTTPRequest((Lcom/slamd/http/HTTPClient;)Ljava/lang/String;)",
+            "com/slamd/http/HTTPClient.getCookies((Ljava/net/URL;)[Lcom/slamd/http/HTTPCookie;)",
+            "com/slamd/asn1/ASN1Element.getBytes((Ljava/lang/String;)[B)",
+            "com/slamd/http/HTTPRequest.getBaseURL(()Ljava/net/URL;)",
+            "com/slamd/http/HTTPClient.readResponse((Ljava/net/URL;Ljava/io/InputStream;Z)Lcom/slamd/http/HTTPResponse;)",
+            "com/slamd/http/HTTPException.<init>((Ljava/lang/String;Ljava/lang/Throwable;)V)",
+            "org/hccp/instrument/TestClass001.doHttpViaThirdClass(()V)",
+            "org/hccp/instrument/TestClass003.doHttpRequest(()V)",
+            "com/slamd/http/HTTPRequest.<init>((ZLjava/net/URL;)V)",
+            "com/slamd/http/HTTPClient.<init>(()V)",
+            "com/slamd/http/HTTPClient.sendRequest((Lcom/slamd/http/HTTPRequest;)Lcom/slamd/http/HTTPResponse;)",
+            "com/slamd/http/HTTPClient.sendRequestInternal((Lcom/slamd/http/HTTPRequest;Z)Lcom/slamd/http/HTTPResponse;)",
+            "com/slamd/http/HTTPRequest.generateHTTPRequest((Lcom/slamd/http/HTTPClient;)Ljava/lang/String;)",
+            "com/slamd/http/HTTPClient.getCookies((Ljava/net/URL;)[Lcom/slamd/http/HTTPCookie;)",
+            "com/slamd/asn1/ASN1Element.getBytes((Ljava/lang/String;)[B)",
+            "com/slamd/http/HTTPRequest.getBaseURL(()Ljava/net/URL;)",
+            "com/slamd/http/HTTPClient.readResponse((Ljava/net/URL;Ljava/io/InputStream;Z)Lcom/slamd/http/HTTPResponse;)",
+            "com/slamd/http/HTTPException.<init>((Ljava/lang/String;Ljava/lang/Throwable;)V)",
+            "org/hccp/instrument/TestClass001.doHttpViaThirdClass(()V)",
+            "org/hccp/instrument/TestClass003.doHttpRequest(()V)",
+            "com/slamd/http/HTTPRequest.<init>((ZLjava/net/URL;)V)",
+            "com/slamd/http/HTTPClient.<init>(()V)",
+            "com/slamd/http/HTTPClient.sendRequest((Lcom/slamd/http/HTTPRequest;)Lcom/slamd/http/HTTPResponse;)",
+            "com/slamd/http/HTTPClient.sendRequestInternal((Lcom/slamd/http/HTTPRequest;Z)Lcom/slamd/http/HTTPResponse;)",
+            "com/slamd/http/HTTPRequest.generateHTTPRequest((Lcom/slamd/http/HTTPClient;)Ljava/lang/String;)",
+            "com/slamd/http/HTTPClient.getCookies((Ljava/net/URL;)[Lcom/slamd/http/HTTPCookie;)",
+            "com/slamd/asn1/ASN1Element.getBytes((Ljava/lang/String;)[B)",
+            "com/slamd/http/HTTPRequest.getBaseURL(()Ljava/net/URL;)",
+            "com/slamd/http/HTTPClient.readResponse((Ljava/net/URL;Ljava/io/InputStream;Z)Lcom/slamd/http/HTTPResponse;)",
+            "com/slamd/http/HTTPException.<init>((Ljava/lang/String;Ljava/lang/Throwable;)V)",
+            "org/hccp/instrument/TestClass001.doHttpViaThirdClass(()V)",
+            "org/hccp/instrument/TestClass003.doHttpRequest(()V)",
+            "com/slamd/http/HTTPRequest.<init>((ZLjava/net/URL;)V)",
+            "com/slamd/http/HTTPClient.<init>(()V)",
+            "com/slamd/http/HTTPClient.sendRequest((Lcom/slamd/http/HTTPRequest;)Lcom/slamd/http/HTTPResponse;)",
+            "com/slamd/http/HTTPClient.sendRequestInternal((Lcom/slamd/http/HTTPRequest;Z)Lcom/slamd/http/HTTPResponse;)",
+            "com/slamd/http/HTTPRequest.generateHTTPRequest((Lcom/slamd/http/HTTPClient;)Ljava/lang/String;)",
+            "com/slamd/http/HTTPClient.getCookies((Ljava/net/URL;)[Lcom/slamd/http/HTTPCookie;)",
+            "com/slamd/asn1/ASN1Element.getBytes((Ljava/lang/String;)[B)",
+            "com/slamd/http/HTTPRequest.getBaseURL(()Ljava/net/URL;)",
+            "com/slamd/http/HTTPClient.readResponse((Ljava/net/URL;Ljava/io/InputStream;Z)Lcom/slamd/http/HTTPResponse;)",
+            "com/slamd/http/HTTPException.<init>((Ljava/lang/String;Ljava/lang/Throwable;)V)"};
 
 
     @Test
@@ -70,57 +118,8 @@ public class NodeDatabaseTest {
         UsageReportUtility util = new UsageReportUtility();
 
 
-        String[] data = {"org/hccp/instrument/TestClass001.doHttpViaThirdClass(()V)",
-                "org/hccp/instrument/TestClass003.doHttpRequest(()V)",
-                "com/slamd/http/HTTPRequest.<init>((ZLjava/net/URL;)V)",
-                "com/slamd/http/HTTPClient.<init>(()V)",
-                "com/slamd/http/HTTPClient.sendRequest((Lcom/slamd/http/HTTPRequest;)Lcom/slamd/http/HTTPResponse;)",
-                "com/slamd/http/HTTPClient.sendRequestInternal((Lcom/slamd/http/HTTPRequest;Z)Lcom/slamd/http/HTTPResponse;)",
-                "com/slamd/http/HTTPRequest.generateHTTPRequest((Lcom/slamd/http/HTTPClient;)Ljava/lang/String;)",
-                "com/slamd/http/HTTPClient.getCookies((Ljava/net/URL;)[Lcom/slamd/http/HTTPCookie;)",
-                "com/slamd/asn1/ASN1Element.getBytes((Ljava/lang/String;)[B)",
-                "com/slamd/http/HTTPRequest.getBaseURL(()Ljava/net/URL;)",
-                "com/slamd/http/HTTPClient.readResponse((Ljava/net/URL;Ljava/io/InputStream;Z)Lcom/slamd/http/HTTPResponse;)",
-                "com/slamd/http/HTTPException.<init>((Ljava/lang/String;Ljava/lang/Throwable;)V)",
-                "org/hccp/instrument/TestClass001.doHttpViaThirdClass(()V)",
-                "org/hccp/instrument/TestClass003.doHttpRequest(()V)",
-                "com/slamd/http/HTTPRequest.<init>((ZLjava/net/URL;)V)",
-                "com/slamd/http/HTTPClient.<init>(()V)",
-                "com/slamd/http/HTTPClient.sendRequest((Lcom/slamd/http/HTTPRequest;)Lcom/slamd/http/HTTPResponse;)",
-                "com/slamd/http/HTTPClient.sendRequestInternal((Lcom/slamd/http/HTTPRequest;Z)Lcom/slamd/http/HTTPResponse;)",
-                "com/slamd/http/HTTPRequest.generateHTTPRequest((Lcom/slamd/http/HTTPClient;)Ljava/lang/String;)",
-                "com/slamd/http/HTTPClient.getCookies((Ljava/net/URL;)[Lcom/slamd/http/HTTPCookie;)",
-                "com/slamd/asn1/ASN1Element.getBytes((Ljava/lang/String;)[B)",
-                "com/slamd/http/HTTPRequest.getBaseURL(()Ljava/net/URL;)",
-                "com/slamd/http/HTTPClient.readResponse((Ljava/net/URL;Ljava/io/InputStream;Z)Lcom/slamd/http/HTTPResponse;)",
-                "com/slamd/http/HTTPException.<init>((Ljava/lang/String;Ljava/lang/Throwable;)V)",
-                "org/hccp/instrument/TestClass001.doHttpViaThirdClass(()V)",
-                "org/hccp/instrument/TestClass003.doHttpRequest(()V)",
-                "com/slamd/http/HTTPRequest.<init>((ZLjava/net/URL;)V)",
-                "com/slamd/http/HTTPClient.<init>(()V)",
-                "com/slamd/http/HTTPClient.sendRequest((Lcom/slamd/http/HTTPRequest;)Lcom/slamd/http/HTTPResponse;)",
-                "com/slamd/http/HTTPClient.sendRequestInternal((Lcom/slamd/http/HTTPRequest;Z)Lcom/slamd/http/HTTPResponse;)",
-                "com/slamd/http/HTTPRequest.generateHTTPRequest((Lcom/slamd/http/HTTPClient;)Ljava/lang/String;)",
-                "com/slamd/http/HTTPClient.getCookies((Ljava/net/URL;)[Lcom/slamd/http/HTTPCookie;)",
-                "com/slamd/asn1/ASN1Element.getBytes((Ljava/lang/String;)[B)",
-                "com/slamd/http/HTTPRequest.getBaseURL(()Ljava/net/URL;)",
-                "com/slamd/http/HTTPClient.readResponse((Ljava/net/URL;Ljava/io/InputStream;Z)Lcom/slamd/http/HTTPResponse;)",
-                "com/slamd/http/HTTPException.<init>((Ljava/lang/String;Ljava/lang/Throwable;)V)",
-                "org/hccp/instrument/TestClass001.doHttpViaThirdClass(()V)",
-                "org/hccp/instrument/TestClass003.doHttpRequest(()V)",
-                "com/slamd/http/HTTPRequest.<init>((ZLjava/net/URL;)V)",
-                "com/slamd/http/HTTPClient.<init>(()V)",
-                "com/slamd/http/HTTPClient.sendRequest((Lcom/slamd/http/HTTPRequest;)Lcom/slamd/http/HTTPResponse;)",
-                "com/slamd/http/HTTPClient.sendRequestInternal((Lcom/slamd/http/HTTPRequest;Z)Lcom/slamd/http/HTTPResponse;)",
-                "com/slamd/http/HTTPRequest.generateHTTPRequest((Lcom/slamd/http/HTTPClient;)Ljava/lang/String;)",
-                "com/slamd/http/HTTPClient.getCookies((Ljava/net/URL;)[Lcom/slamd/http/HTTPCookie;)",
-                "com/slamd/asn1/ASN1Element.getBytes((Ljava/lang/String;)[B)",
-                "com/slamd/http/HTTPRequest.getBaseURL(()Ljava/net/URL;)",
-                "com/slamd/http/HTTPClient.readResponse((Ljava/net/URL;Ljava/io/InputStream;Z)Lcom/slamd/http/HTTPResponse;)",
-                "com/slamd/http/HTTPException.<init>((Ljava/lang/String;Ljava/lang/Throwable;)V)"};
-
-        for (int i = 0; i < data.length; i++) {
-            String entry = data[i];
+        for (int i = 0; i < DATA.length; i++) {
+            String entry = DATA[i];
             Node node = util.getNodeFromString(entry);
             db.addNode(node);
         }
@@ -161,8 +160,24 @@ public class NodeDatabaseTest {
             }
 
             System.out.println("db.toString() = \n" + db.toString());
+            System.out.println(db.printDatabaseAsCanvas(roots, 10, 48, new StringBuffer()));
         }
 
+
+    }
+
+
+    public static void main(String[] args) {
+        NodeDatabase db = new NodeDatabase();
+        UsageReportUtility util = new UsageReportUtility();
+
+
+        for (int i = 0; i < DATA.length; i++) {
+            String entry = DATA[i];
+            Node node = util.getNodeFromString(entry);
+            db.addNode(node);
+        }
+        System.out.println(db.printDatabaseAsCanvas(db.getRoots(), 10, 48, new StringBuffer()));
 
     }
 
