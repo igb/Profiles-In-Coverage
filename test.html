@@ -1,28 +1,57 @@
 <html>
 <body>
 	s
-<canvas id="canvas" width="300" height="300">s</canvas>
+<canvas id="canvas" width="1800" height="1800">s</canvas>
 <script>
+function node(name, access_count) {
+	this.children=[];
+	this.name=name;
+	this.qualified_name=compute_qualified_name();
+	this.access_count=access_count;
+	this.parent=null;	
+}
+
+function add_child(node, child) {
+	node.children.push(child);
+	child.parent=node;
+}
+
+function add_child_to_node(node, child) {
+	node.children.push(child);
+	child.parent=node;
+}
+
+function compute_qualified_name() {
+	if (this.parent == null) {
+		return this.name;
+	} else {
+		return this.parent.qualified_name + '.' + this.name;
+	}
+}
+
+
+
+
+
+
+ 
+foo=new node("something", 12);
+bar=new node("parentName", 12);
+com=new node("root", 12);
+
+add_child_to_node(com, bar);
+add_child_to_node(bar, foo);
+alert(com.qualified_name);
 //get a reference to the canvas
+
 var ctx = canvas.getContext("2d");
-//draw a circle
-ctx.beginPath();
-//ctx.arc(75, 75, 10, 0, Math.PI*2, true); 
-ctx.rect(10, 10, 20, 20)
-ctx.closePath();
-ctx.stroke();
 
-ctx.beginPath();
-ctx.moveTo(30, 20);
-ctx.lineTo(50, 20);
-ctx.closePath();
-ctx.stroke();
 
+ctx.fillStyle = "rgba(255,0,0,0.083333336)";
 ctx.beginPath();
-ctx.moveTo(50, 20);
-ctx.lineTo(50, 50);
+ctx.rect(105, 105, 20, 20);
 ctx.closePath();
-ctx.stroke();
+ctx.fill();
 
 
 </script>
