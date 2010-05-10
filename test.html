@@ -3,30 +3,29 @@
 	s
 <canvas id="canvas" width="1800" height="1800">s</canvas>
 <script>
+
 function node(name, access_count) {
 	this.children=[];
 	this.name=name;
-	this.qualified_name=compute_qualified_name();
 	this.access_count=access_count;
-	this.parent=null;	
+	this.parent=null;
 }
 
-function add_child(node, child) {
-	node.children.push(child);
-	child.parent=node;
+
+node.prototype.add_child=function(child) {
+  this.children.push(child);	
+  child.parent=this;
 }
 
-function add_child_to_node(node, child) {
-	node.children.push(child);
-	child.parent=node;
-}
 
-function compute_qualified_name() {
+node.prototype.get_qname=function() {
+   var qname="";
 	if (this.parent == null) {
-		return this.name;
+		 qname=this.name;
 	} else {
-		return this.parent.qualified_name + '.' + this.name;
+		 qname=this.parent.get_qname() + '.' + this.name;
 	}
+	return qname
 }
 
 
@@ -34,15 +33,21 @@ function compute_qualified_name() {
 
 
 
- 
-foo=new node("something", 12);
+
+
+bat=new node("batterUp", 5); 
+foo=new node("something", 7);
 bar=new node("parentName", 12);
 com=new node("root", 12);
 
-add_child_to_node(com, bar);
-add_child_to_node(bar, foo);
-alert(com.qualified_name);
-//get a reference to the canvas
+com.add_child(bar);
+bar.add_child(foo);
+bar.add_child(bat);
+
+alert(foo.get_qname());
+alert(bat.get_qname());
+
+// get a reference to the canvas
 
 var ctx = canvas.getContext("2d");
 
