@@ -177,8 +177,10 @@ public class NodeDatabaseTest {
             Node node = util.getNodeFromString(entry);
             db.addNode(node);
         }
-        System.out.println(db.printDatabaseAsCanvas(db.getRoots(), 10, 48, new StringBuffer()));
+      //  System.out.println(db.printDatabaseAsCanvas(db.getRoots(), 1, 48, new StringBuffer()));
 
+        String canvas=db.renderDatabaseToCanvas(db.getRoots().get(1));
+        System.out.println(canvas);
     }
 
 }

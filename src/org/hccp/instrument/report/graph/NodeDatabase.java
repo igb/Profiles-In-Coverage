@@ -75,12 +75,16 @@ public class NodeDatabase {
 
 
         public String  printDatabaseAsCanvas(List<Node> nodes, int offset, int totalCount, StringBuffer buffer) {
-         int xOffset=20 * offset;
+         int xOffset=(20 * offset) + 5;
+           int yOffset=0;
             for (int i = 0; i < nodes.size(); i++) {
             Node node = nodes.get(i);
             for (int j=0; j<= offset; j++) {
-                buffer.append(CanvasUtility.drawNode(node, totalCount, xOffset, (20 * j) + 5));
+               yOffset=(20 * j) + 5;
             }
+
+                buffer.append(CanvasUtility.drawNode(node, totalCount, xOffset, yOffset));
+
             List<Node> children = node.getChildren();
             printDatabaseAsCanvas(children, offset + 1, totalCount, buffer );
         }
@@ -88,6 +92,24 @@ public class NodeDatabase {
     }
 
 
+    public String renderDatabaseToCanvas(Node node) {
+        StringBuffer sb = new StringBuffer();
+       sb.append(sanitize(node.getQualifiedName()) +  "=new node('" + node.getName() + "', " + node.getAccessCount() + ");\n");
+
+
+        List<Node> children = node.getChildren();
+        for (int i = 0; i < children.size(); i++) {
+            Node child = children.get(i);
+            sb.append(renderDatabaseToCanvas(child));
+            sb.append(sanitize(node.getQualifiedName()) + ".add_child(" + sanitize(child.getQualifiedName()) + ");\n");
+
+        }
+        return sb.toString();
+    }
+
+    public String sanitize(String dirtyString) {
+        return dirtyString.replaceAll("[\\[\\.();/<>\\]]", "_");
+    }
 
     
 }
