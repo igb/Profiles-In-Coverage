@@ -28,35 +28,50 @@ node.prototype.get_qname=function() {
 	return qname
 }
 
+function draw_node(node, canvas, x, y, size, total) {
+	var ctx = canvas.getContext("2d");
+	ctx.fillStyle = "rgba(255,0,0," + (node.access_count / total) + ")";
+	ctx.beginPath();
+	ctx.rect(x, y, size, size);
+	ctx.closePath();
+	ctx.fill();
+	
+	var my_children = node.children;
+	var y_offset=my_children.length;
+	
+	var i;
+	var child_y_offset=0;
+	for (i=0; i < my_children.length; i++) {
+		child_y_offset+=draw_node(my_children[i], canvas, x + size, y + (size * (child_y_offset+1 +i)), size, total);
+	}
+	return y_offset;
+	
+}
 
 
 
 
 
 
-
-bat=new node("batterUp", 5); 
-foo=new node("something", 7);
-bar=new node("parentName", 12);
-com=new node("root", 12);
+bat=new node("bat", 5); 
+foo=new node("foo", 7);
+bar=new node("bar", 12);
+bong=new node("bong", 2);
+bing=new node("bing", 2);  
+com=new node("com", 14);
 
 com.add_child(bar);
+com.add_child(bong);
+bong.add_child(bing);
 bar.add_child(foo);
 bar.add_child(bat);
 
-alert(foo.get_qname());
-alert(bat.get_qname());
-
-// get a reference to the canvas
-
-var ctx = canvas.getContext("2d");
+//alert(foo.get_qname());
+//alert(bat.get_qname());
+//alert(bar.children.length);
 
 
-ctx.fillStyle = "rgba(255,0,0,0.083333336)";
-ctx.beginPath();
-ctx.rect(105, 105, 20, 20);
-ctx.closePath();
-ctx.fill();
+draw_node(com, canvas, 10, 10, 40, 14);
 
 
 </script>
