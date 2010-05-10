@@ -1,6 +1,5 @@
 <html>
 <body>
-	s
 <canvas id="canvas" width="1800" height="1800">s</canvas>
 <script>
 
@@ -36,6 +35,12 @@ function draw_node(node, canvas, x, y, size, total) {
 	ctx.closePath();
 	ctx.fill();
 	
+	ctx.fillStyle    = "rgba(0,0,0," + (node.access_count / total) + ")"
+	ctx.font         = 'italic ' + (size / 3) + 'px sans-serif';
+	ctx.textBaseline = 'top';
+	ctx.fillText  (node.name + " (" + node.access_count + ")" , x + 2, y + 2);
+	
+	
 	var my_children = node.children;
 	var y_offset=my_children.length;
 	
@@ -66,14 +71,8 @@ bong.add_child(bing);
 bar.add_child(foo);
 bar.add_child(bat);
 
-//alert(foo.get_qname());
-//alert(bat.get_qname());
-//alert(bar.children.length);
 
-
-draw_node(com, canvas, 10, 10, 40, 14);
-
-
+draw_node(com, canvas, 10, 10, 100, 14);
 </script>
 </body>
 </html>
