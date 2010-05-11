@@ -5,6 +5,10 @@
 	#sliderbg {
 	    background:url(img/bg-h.gif) 5px 0 no-repeat;
 	}
+	
+	#scoperbg {
+	    background:url(img/bg-h.gif) 5px 0 no-repeat;
+	}
 	</style>
 	<!--end custom header content for this example-->
 	
@@ -20,39 +24,160 @@
 <script src="http://yui.yahooapis.com/2.8.1/build/slider/slider-min.js"></script>
 </head>
 <body>
-	<div id="sliderbg">
+	<div>Scale: <div id="sliderbg" width=100>
 	    <div id="sliderthumb"><img src="img/thumb-n.gif"></div>
 	</div>
+	</div>
+	<div>Scope: <div id="scoperbg" width=100>
+	    <div id="scoperthumb"><img src="img/thumb-n.gif"></div>
+	</div>
+	</div>
 <script>
-var slider = YAHOO.widget.Slider.getHorizSlider("sliderbg", "sliderthumb", 0, 200);
+var slider = YAHOO.widget.Slider.getHorizSlider("sliderbg", "sliderthumb", 20, 200, 2);
 slider.subscribe('change', function (newOffset) {
-    YAHOO.log("Thumb is now " + newOffset + " pixels from its starting position");
- 
-    myElement.innerHTML = newOffset;
+ 	clear(canvas);
+	draw(newOffset);
 });
  
-slider.subscribe("slideStart", function() {
-    YAHOO.log("Slider is a go!");
- 
-    YAHOO.util.Dom.setStyle(myElement,'background-color','#9f9');
-});
- 
-slider.subscribe("slideEnd", function() {
-    YAHOO.log("The thumb has arrived");
- 
-    YAHOO.util.Dom.setStyle(myElement,'background-color','#9f9');
- 
-    // Move the thumb to an increment of 10 pixels
-    // (see using ticks for a better option)
-    var val = slider.getValue(),
-        roundedVal = val - (val % 10);
- 
-    // Note: DO NOT attempt slider.setValue(x) here.
-    // You CAN call setValue in a setTimeout from here, though.
-    if (val !== roundedVal) {
-        setTimeout(function () { slider.setValue(roundedVal); },0);
-    }
-});
+
 </script>
+	
+<canvas id="canvas" width="1800" height="1800">s</canvas>
+<script>
+
+function node(name, access_count) {
+	this.children=[];
+	this.name=name;
+	this.access_count=access_count;
+	this.parent=null;
+}
+
+function clear(canvas) {
+	canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);
+}
+
+
+node.prototype.add_child=function(child) {
+  this.children.push(child);	
+  child.parent=this;
+}
+
+
+node.prototype.get_qname=function() {
+   var qname="";
+	if (this.parent == null) {
+		 qname=this.name;
+	} else {
+		 qname=this.parent.get_qname() + '.' + this.name;
+	}
+	return qname
+}
+
+function draw_node(node, canvas, x, y, size, total) {
+	var ctx = canvas.getContext("2d");
+	ctx.fillStyle = "rgba(255,0,0," + (node.access_count / total) + ")";
+	ctx.beginPath();
+	ctx.rect(x, y, size, size);
+	ctx.closePath();
+	ctx.fill();
+	
+	ctx.fillStyle    = "rgba(0,0,0," + (node.access_count / total) + ")"
+	ctx.font         = 'italic ' + (size / 3) + 'px sans-serif';
+	ctx.textBaseline = 'top';
+	ctx.fillText  (node.name + " (" + node.access_count + ")" , x + 2, y + 2);
+	
+	
+	var my_children = node.children;
+	var y_offset=my_children.length;
+	
+	var i;
+	var child_y_offset=0;
+	for (i=0; i < my_children.length; i++) {
+		child_y_offset+=draw_node(my_children[i], canvas, x + size, y + (size * (child_y_offset + 1 + i)), size, total);
+	}
+	return y_offset + child_y_offset;
+	
+}
+
+
+
+
+
+
+bat=new node("bat", 5); 
+foo=new node("foo", 7);
+bar=new node("bar", 12);
+bong=new node("bong", 2);
+bing=new node("bing", 2);  
+com2=new node("com", 14);
+
+com2.add_child(bar);
+com2.add_child(bong);
+bong.add_child(bing);
+bar.add_child(foo);
+bar.add_child(bat);
+
+
+com=new node('com', 40);
+com_slamd=new node('slamd', 40);
+com_slamd_http=new node('http', 36);
+com_slamd_http_HTTPRequest=new node('HTTPRequest', 12);
+com_slamd_http_HTTPRequest__init___ZLjava_net_URL__V_=new node('<init>((ZLjava/net/URL;)V)', 4);
+com_slamd_http_HTTPRequest.add_child(com_slamd_http_HTTPRequest__init___ZLjava_net_URL__V_);
+com_slamd_http_HTTPRequest_generateHTTPRequest__Lcom_slamd_http_HTTPClient__Ljava_lang_String__=new node('generateHTTPRequest((Lcom/slamd/http/HTTPClient;)Ljava/lang/String;)', 4);
+com_slamd_http_HTTPRequest.add_child(com_slamd_http_HTTPRequest_generateHTTPRequest__Lcom_slamd_http_HTTPClient__Ljava_lang_String__);
+com_slamd_http_HTTPRequest_getBaseURL___Ljava_net_URL__=new node('getBaseURL(()Ljava/net/URL;)', 4);
+com_slamd_http_HTTPRequest.add_child(com_slamd_http_HTTPRequest_getBaseURL___Ljava_net_URL__);
+com_slamd_http.add_child(com_slamd_http_HTTPRequest);
+com_slamd_http_HTTPClient=new node('HTTPClient', 20);
+com_slamd_http_HTTPClient__init____V_=new node('<init>(()V)', 4);
+com_slamd_http_HTTPClient.add_child(com_slamd_http_HTTPClient__init____V_);
+com_slamd_http_HTTPClient_sendRequest__Lcom_slamd_http_HTTPRequest__Lcom_slamd_http_HTTPResponse__=new node('sendRequest((Lcom/slamd/http/HTTPRequest;)Lcom/slamd/http/HTTPResponse;)', 4);
+com_slamd_http_HTTPClient.add_child(com_slamd_http_HTTPClient_sendRequest__Lcom_slamd_http_HTTPRequest__Lcom_slamd_http_HTTPResponse__);
+com_slamd_http_HTTPClient_sendRequestInternal__Lcom_slamd_http_HTTPRequest_Z_Lcom_slamd_http_HTTPResponse__=new node('sendRequestInternal((Lcom/slamd/http/HTTPRequest;Z)Lcom/slamd/http/HTTPResponse;)', 4);
+com_slamd_http_HTTPClient.add_child(com_slamd_http_HTTPClient_sendRequestInternal__Lcom_slamd_http_HTTPRequest_Z_Lcom_slamd_http_HTTPResponse__);
+com_slamd_http_HTTPClient_getCookies__Ljava_net_URL___Lcom_slamd_http_HTTPCookie__=new node('getCookies((Ljava/net/URL;)[Lcom/slamd/http/HTTPCookie;)', 4);
+com_slamd_http_HTTPClient.add_child(com_slamd_http_HTTPClient_getCookies__Ljava_net_URL___Lcom_slamd_http_HTTPCookie__);
+com_slamd_http_HTTPClient_readResponse__Ljava_net_URL_Ljava_io_InputStream_Z_Lcom_slamd_http_HTTPResponse__=new node('readResponse((Ljava/net/URL;Ljava/io/InputStream;Z)Lcom/slamd/http/HTTPResponse;)', 4);
+com_slamd_http_HTTPClient.add_child(com_slamd_http_HTTPClient_readResponse__Ljava_net_URL_Ljava_io_InputStream_Z_Lcom_slamd_http_HTTPResponse__);
+com_slamd_http.add_child(com_slamd_http_HTTPClient);
+com_slamd_http_HTTPException=new node('HTTPException', 4);
+com_slamd_http_HTTPException__init___Ljava_lang_String_Ljava_lang_Throwable__V_=new node('<init>((Ljava/lang/String;Ljava/lang/Throwable;)V)', 4);
+com_slamd_http_HTTPException.add_child(com_slamd_http_HTTPException__init___Ljava_lang_String_Ljava_lang_Throwable__V_);
+com_slamd_http.add_child(com_slamd_http_HTTPException);
+com_slamd.add_child(com_slamd_http);
+com_slamd_asn1=new node('asn1', 4);
+com_slamd_asn1_ASN1Element=new node('ASN1Element', 4);
+com_slamd_asn1_ASN1Element_getBytes__Ljava_lang_String___B_=new node('getBytes((Ljava/lang/String;)[B)', 4);
+com_slamd_asn1_ASN1Element.add_child(com_slamd_asn1_ASN1Element_getBytes__Ljava_lang_String___B_);
+com_slamd_asn1.add_child(com_slamd_asn1_ASN1Element);
+com_slamd.add_child(com_slamd_asn1);
+com.add_child(com_slamd);
+
+org=new node('org', 8);
+org_hccp=new node('hccp', 8);
+org_hccp_instrument=new node('instrument', 8);
+org_hccp_instrument_TestClass001=new node('TestClass001', 4);
+org_hccp_instrument_TestClass001_doHttpViaThirdClass___V_=new node('doHttpViaThirdClass(()V)', 4);
+org_hccp_instrument_TestClass001.add_child(org_hccp_instrument_TestClass001_doHttpViaThirdClass___V_);
+org_hccp_instrument.add_child(org_hccp_instrument_TestClass001);
+org_hccp_instrument_TestClass003=new node('TestClass003', 4);
+org_hccp_instrument_TestClass003_doHttpRequest___V_=new node('doHttpRequest(()V)', 4);
+org_hccp_instrument_TestClass003.add_child(org_hccp_instrument_TestClass003_doHttpRequest___V_);
+org_hccp_instrument.add_child(org_hccp_instrument_TestClass003);
+org_hccp.add_child(org_hccp_instrument);
+org.add_child(org_hccp);
+
+
+function draw(size) {
+	var yOffset=draw_node(com, canvas, 10, 10, size, 48);
+	draw_node(org, canvas, 10, 10 + ((yOffset + 1) * size), size, 48);
+}
+draw(20);
+slider.setValue(20); 
+</script>
+
 </body>
+
+
 </html>
