@@ -1,0 +1,58 @@
+<html>
+<head>
+	<!--begin custom header content for this example-->
+	<style type="text/css">
+	#sliderbg {
+	    background:url(img/bg-h.gif) 5px 0 no-repeat;
+	}
+	</style>
+	<!--end custom header content for this example-->
+	
+	
+<!-- Dependencies --> 
+<script src="http://yui.yahooapis.com/2.8.1/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script src="http://yui.yahooapis.com/2.8.1/build/dragdrop/dragdrop-min.js"></script>
+ 
+<!-- Slider skin (optional) --> 
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.1/build/slider/assets/skins/sam/slider.css">
+ 
+<!-- Slider source file --> 
+<script src="http://yui.yahooapis.com/2.8.1/build/slider/slider-min.js"></script>
+</head>
+<body>
+	<div id="sliderbg">
+	    <div id="sliderthumb"><img src="img/thumb-n.gif"></div>
+	</div>
+<script>
+var slider = YAHOO.widget.Slider.getHorizSlider("sliderbg", "sliderthumb", 0, 200);
+slider.subscribe('change', function (newOffset) {
+    YAHOO.log("Thumb is now " + newOffset + " pixels from its starting position");
+ 
+    myElement.innerHTML = newOffset;
+});
+ 
+slider.subscribe("slideStart", function() {
+    YAHOO.log("Slider is a go!");
+ 
+    YAHOO.util.Dom.setStyle(myElement,'background-color','#9f9');
+});
+ 
+slider.subscribe("slideEnd", function() {
+    YAHOO.log("The thumb has arrived");
+ 
+    YAHOO.util.Dom.setStyle(myElement,'background-color','#9f9');
+ 
+    // Move the thumb to an increment of 10 pixels
+    // (see using ticks for a better option)
+    var val = slider.getValue(),
+        roundedVal = val - (val % 10);
+ 
+    // Note: DO NOT attempt slider.setValue(x) here.
+    // You CAN call setValue in a setTimeout from here, though.
+    if (val !== roundedVal) {
+        setTimeout(function () { slider.setValue(roundedVal); },0);
+    }
+});
+</script>
+</body>
+</html>
