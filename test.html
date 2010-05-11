@@ -1,5 +1,7 @@
 <html>
 <body>
+	<a href="javascript:clear(canvas);">clear</a>&nbsp;&nbsp;	<a href="javascript:clear(canvas);draw(20);">smaller</a>&nbsp;&nbsp;	<a href="javascript:clear(canvas);draw(50);">bigger</a>
+	
 <canvas id="canvas" width="1800" height="1800">s</canvas>
 <script>
 
@@ -8,6 +10,10 @@ function node(name, access_count) {
 	this.name=name;
 	this.access_count=access_count;
 	this.parent=null;
+}
+
+function clear(canvas) {
+	canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);
 }
 
 
@@ -47,9 +53,9 @@ function draw_node(node, canvas, x, y, size, total) {
 	var i;
 	var child_y_offset=0;
 	for (i=0; i < my_children.length; i++) {
-		child_y_offset+=draw_node(my_children[i], canvas, x + size, y + (size * (child_y_offset+1 +i)), size, total);
+		child_y_offset+=draw_node(my_children[i], canvas, x + size, y + (size * (child_y_offset + 1 + i)), size, total);
 	}
-	return y_offset;
+	return y_offset + child_y_offset;
 	
 }
 
@@ -108,9 +114,26 @@ com_slamd_asn1.add_child(com_slamd_asn1_ASN1Element);
 com_slamd.add_child(com_slamd_asn1);
 com.add_child(com_slamd);
 
+org=new node('org', 8);
+org_hccp=new node('hccp', 8);
+org_hccp_instrument=new node('instrument', 8);
+org_hccp_instrument_TestClass001=new node('TestClass001', 4);
+org_hccp_instrument_TestClass001_doHttpViaThirdClass___V_=new node('doHttpViaThirdClass(()V)', 4);
+org_hccp_instrument_TestClass001.add_child(org_hccp_instrument_TestClass001_doHttpViaThirdClass___V_);
+org_hccp_instrument.add_child(org_hccp_instrument_TestClass001);
+org_hccp_instrument_TestClass003=new node('TestClass003', 4);
+org_hccp_instrument_TestClass003_doHttpRequest___V_=new node('doHttpRequest(()V)', 4);
+org_hccp_instrument_TestClass003.add_child(org_hccp_instrument_TestClass003_doHttpRequest___V_);
+org_hccp_instrument.add_child(org_hccp_instrument_TestClass003);
+org_hccp.add_child(org_hccp_instrument);
+org.add_child(org_hccp);
 
-//draw_node(com, canvas, 10, 10, 100, 14);
-draw_node(com, canvas, 10, 10, 50, 40);
+
+function draw(size) {
+	var yOffset=draw_node(com, canvas, 10, 10, size, 48);
+	draw_node(org, canvas, 10, 10 + ((yOffset + 1) * size), size, 48);
+}
+draw(20);
 </script>
 </body>
 </html>
