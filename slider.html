@@ -27,18 +27,35 @@
 	<div>Scale: <div id="sliderbg" width=100>
 	    <div id="sliderthumb"><img src="img/thumb-n.gif"></div>
 	</div>
-	</div>
+	</div><span id="scaleguage"></span>
 	<div>Scope: <div id="scoperbg" width=100>
 	    <div id="scoperthumb"><img src="img/thumb-n.gif"></div>
 	</div>
-	</div>
+	</div><span id="scopeguage"></span>
 <script>
+
+var depth_limit=1;
+var scale=1;
+
+
 var slider = YAHOO.widget.Slider.getHorizSlider("sliderbg", "sliderthumb", 20, 200, 2);
 slider.subscribe('change', function (newOffset) {
  	clear(canvas);
-	draw(newOffset);
+	scale=newOffset;
+	draw(scale, 0, depth_limit);
 });
- 
+
+var scoper = YAHOO.widget.Slider.getHorizSlider("scoperbg", "scoperthumb", 20, 200, 20);
+
+scoper.getRealValue = function() { 
+          return Math.round(this.getValue() /	 20); 
+}
+
+scoper.subscribe('change', function (newOffset) {
+ 	clear(canvas);
+   depth_limit=scoper.getRealValue();
+	draw(scale, 0, depth_limit);
+}); 
 
 </script>
 	
@@ -73,9 +90,19 @@ node.prototype.get_qname=function() {
 	return qname
 }
 
-function draw_node(node, canvas, x, y, size, total) {
+function draw_node(node, canvas, x, y, size, total, current_depth, depth_limit) {
+	document.getElementById("scaleguage").innerHTML=scale;
+	document.getElementById("scopeguage").innerHTML=depth_limit;
+	
+	if (current_depth >= depth_limit) {
+		console.log(current_depth + " >=" + depth_limit);
+		return 0;
+	}
+//	alert(current_depth);
+	
+	
 	var ctx = canvas.getContext("2d");
-	ctx.fillStyle = "rgba(255,0,0," + (node.access_count / total) + ")";
+	ctx.fillStyle = "rgba(255,0,0," + (node.access_count / total)  + ")";
 	ctx.beginPath();
 	ctx.rect(x, y, size, size);
 	ctx.closePath();
@@ -92,8 +119,9 @@ function draw_node(node, canvas, x, y, size, total) {
 	
 	var i;
 	var child_y_offset=0;
+	current_depth++;
 	for (i=0; i < my_children.length; i++) {
-		child_y_offset+=draw_node(my_children[i], canvas, x + size, y + (size * (child_y_offset + 1 + i)), size, total);
+		child_y_offset+=draw_node(my_children[i], canvas, x + size, y + (size * (child_y_offset + 1 + i)), size, total, current_depth, depth_limit);
 	}
 	return y_offset + child_y_offset;
 	
@@ -169,12 +197,18 @@ org_hccp.add_child(org_hccp_instrument);
 org.add_child(org_hccp);
 
 
-function draw(size) {
-	var yOffset=draw_node(com, canvas, 10, 10, size, 48);
-	draw_node(org, canvas, 10, 10 + ((yOffset + 1) * size), size, 48);
+function draw(size, current_depth, depth_limit) {
+	clear(canvas);
+ 	console.log("calling draw...");
+	//alert("calling draw...");
+	var yOffset=draw_node(com, canvas, 10, 10, size, 48, current_depth, depth_limit);
+	//alert(yOffset);
+	draw_node(org, canvas, 10, 10 + ((yOffset + 1) * size), size, 48, current_depth, depth_limit);
 }
-draw(20);
-slider.setValue(20); 
+//draw(20, 1, depth_limit);
+slider.setValue(20);
+scoper.setValue(20); 
+ 
 </script>
 
 </body>
