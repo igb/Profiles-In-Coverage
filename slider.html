@@ -95,7 +95,7 @@ function draw_node(node, canvas, x, y, size, total, current_depth, depth_limit) 
 	document.getElementById("scopeguage").innerHTML=depth_limit;
 	
 	if (current_depth >= depth_limit) {
-		console.log(current_depth + " >=" + depth_limit);
+	//	console.log(current_depth + " >=" + depth_limit);
 		return 0;
 	}
 //	alert(current_depth);
@@ -199,7 +199,7 @@ org.add_child(org_hccp);
 
 function draw(size, current_depth, depth_limit) {
 	clear(canvas);
- 	console.log("calling draw...");
+ 	//console.log("calling draw...");
 	//alert("calling draw...");
 	var yOffset=draw_node(com, canvas, 10, 10, size, 48, current_depth, depth_limit);
 	//alert(yOffset);
