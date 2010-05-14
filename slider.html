@@ -94,16 +94,6 @@ function draw_node(node, canvas, x, y, size, total, current_depth, depth_limit) 
 	document.getElementById("scaleguage").innerHTML=scale;
 	document.getElementById("scopeguage").innerHTML=depth_limit;
 	
-	if ((current_depth * 1) > (depth_limit * 1)) {
-		console.log(current_depth + " >" + depth_limit);
-//		return 0;
-	}
-console.log((current_depth * 1) > (depth_limit * 1));
-	console.log("current depth: " + current_depth);
-	console.log("depth: " + depth_limit);
-
-	
-	
 	var ctx = canvas.getContext("2d");
 	ctx.fillStyle = "rgba(255,0,0," + (node.access_count / total)  + ")";
 	ctx.beginPath();
@@ -128,13 +118,11 @@ console.log((current_depth * 1) > (depth_limit * 1));
 		current_depth++;
 		for (i=0; i < my_children.length; i++) {
 			var child_offset=draw_node(my_children[i], canvas, x + size, y + (size * (child_y_offset + 1 + i)), size, total, current_depth, depth_limit);
-	    	console.log("child offset for " + my_children[i].name + " is  " + child_offset);
 			child_y_offset+=child_offset;
 		}
 	
 	}
 	
-	console.log("returning offset for " + node.name + ": " + (y_offset + child_y_offset));
 	return y_offset + child_y_offset;
 	
 }
@@ -193,19 +181,13 @@ org.add_child(org_hccp);
 
 function draw(size, current_depth, depth_limit) {
 	clear(canvas);
- 	//console.log("calling draw...");
-	//alert("calling draw...");
 	var yOffset=draw_node(com, canvas, 10, 10, size, 48, current_depth, depth_limit);
-	//alert(yOffset);
 	draw_node(org, canvas, 10, 10 + ((yOffset + 1) * size), size, 48, current_depth, depth_limit);
 }
-//draw(20, 1, depth_limit);
+
 slider.setValue(20);
 scoper.setValue(20); 
- 
 </script>
 
 </body>
-
-
 </html>

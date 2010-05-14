@@ -160,7 +160,6 @@ public class NodeDatabaseTest {
             }
 
             System.out.println("db.toString() = \n" + db.toString());
-            System.out.println(db.printDatabaseAsCanvas(roots, 10, 48, new StringBuffer()));
         }
 
 

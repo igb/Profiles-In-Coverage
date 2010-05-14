@@ -1,6 +1,5 @@
 package org.hccp.instrument.report.graph;
 
-import org.hccp.instrument.report.graph.canvas.CanvasUtility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,24 +68,6 @@ public class NodeDatabase {
             buffer.append(node.getName() + " (" + node.getAccessCount() + ")\n");
             List<Node> children = node.getChildren();
             printDatabase(children, offset + 1, buffer );
-        }
-        return buffer.toString();
-    }
-
-
-        public String  printDatabaseAsCanvas(List<Node> nodes, int offset, int totalCount, StringBuffer buffer) {
-         int xOffset=(20 * offset) + 5;
-           int yOffset=0;
-            for (int i = 0; i < nodes.size(); i++) {
-            Node node = nodes.get(i);
-            for (int j=0; j<= offset; j++) {
-               yOffset=(20 * j) + 5;
-            }
-
-                buffer.append(CanvasUtility.drawNode(node, totalCount, xOffset, yOffset));
-
-            List<Node> children = node.getChildren();
-            printDatabaseAsCanvas(children, offset + 1, totalCount, buffer );
         }
         return buffer.toString();
     }
