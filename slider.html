@@ -94,11 +94,14 @@ function draw_node(node, canvas, x, y, size, total, current_depth, depth_limit) 
 	document.getElementById("scaleguage").innerHTML=scale;
 	document.getElementById("scopeguage").innerHTML=depth_limit;
 	
-	if (current_depth >= depth_limit) {
-	//	console.log(current_depth + " >=" + depth_limit);
-		return 0;
+	if ((current_depth * 1) > (depth_limit * 1)) {
+		console.log(current_depth + " >" + depth_limit);
+//		return 0;
 	}
-//	alert(current_depth);
+console.log((current_depth * 1) > (depth_limit * 1));
+	console.log("current depth: " + current_depth);
+	console.log("depth: " + depth_limit);
+
 	
 	
 	var ctx = canvas.getContext("2d");
@@ -115,35 +118,26 @@ function draw_node(node, canvas, x, y, size, total, current_depth, depth_limit) 
 	
 	
 	var my_children = node.children;
-	var y_offset=my_children.length;
-	
-	var i;
+	var y_offset=0;
 	var child_y_offset=0;
-	current_depth++;
-	for (i=0; i < my_children.length; i++) {
-		child_y_offset+=draw_node(my_children[i], canvas, x + size, y + (size * (child_y_offset + 1 + i)), size, total, current_depth, depth_limit);
+	if (current_depth < depth_limit) {
+		y_offset=my_children.length;
+
+	
+		var i;
+		current_depth++;
+		for (i=0; i < my_children.length; i++) {
+			var child_offset=draw_node(my_children[i], canvas, x + size, y + (size * (child_y_offset + 1 + i)), size, total, current_depth, depth_limit);
+	    	console.log("child offset for " + my_children[i].name + " is  " + child_offset);
+			child_y_offset+=child_offset;
+		}
+	
 	}
+	
+	console.log("returning offset for " + node.name + ": " + (y_offset + child_y_offset));
 	return y_offset + child_y_offset;
 	
 }
-
-
-
-
-
-
-bat=new node("bat", 5); 
-foo=new node("foo", 7);
-bar=new node("bar", 12);
-bong=new node("bong", 2);
-bing=new node("bing", 2);  
-com2=new node("com", 14);
-
-com2.add_child(bar);
-com2.add_child(bong);
-bong.add_child(bing);
-bar.add_child(foo);
-bar.add_child(bat);
 
 
 com=new node('com', 40);
