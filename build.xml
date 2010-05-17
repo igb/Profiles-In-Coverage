@@ -20,7 +20,7 @@
     </target>
 
     <target name="compile" depends="init">
-        <javac debug="true" srcdir="${src.dir}" destdir="${build.dir}">
+        <javac target="1.5" debug="true" srcdir="${src.dir}" destdir="${build.dir}">
             <classpath refid="lib"/>
         </javac>
     </target>
@@ -38,6 +38,26 @@
              manifest="${config.dir}/usage-map-manifest.mf"/>
     </target>
 
+
+        <target name="package-dummy" depends="compile">
+
+        <unzip src="lib/asm-util-3.2.jar" dest="${build.dir}"/>
+        <unzip src="lib/asm-3.2.jar" dest="${build.dir}"/>
+            
+        <jar basedir="${build.dir}"
+             jarfile="${dist.dir}/hccp-dummy-premain.jar"
+             manifest="${config.dir}/dummy-manifest.mf"/>
+    </target>
+
+
+    <target name="package-with-deps" depends="compile">
+        <unzip src="lib/asm-util-3.2.jar" dest="${build.dir}"/>
+        <unzip src="lib/asm-3.2.jar" dest="${build.dir}"/>
+        <jar basedir="${build.dir}"
+             jarfile="${dist.dir}/hccp-usage-map-all-deps.jar"
+             manifest="${config.dir}/usage-map-manifest.mf"/>
+    </target>
+
     <target name="package-test" depends="compile, compile-test">
         <jar basedir="${build.dir}"
              jarfile="${dist.dir}/hccp-usage-map-including-test.jar"
@@ -49,25 +69,34 @@
 
     </target>
 
+    <target name="war" depends="package">
+        <war destfile="${dist.dir}/usage-test.war"
+             webxml="${config.dir}/web.xml">
+            <fileset dir="${websrc.dir}">
+                <include name="**/*.jsp"/>
+            </fileset>
+            <lib dir="${lib.dir}">
+                <include name="**/*.jar"/>
+            </lib>
+
+            <lib dir="${dist.dir}">
+                <include name="**/*.jar"/>
+            </lib> 
+        </war>
+    </target>
 
     <target name="test" depends="compile-test">
 
         <junit haltonerror="true">
-
             <classpath refid="classpath.test"/>
             <classpath location="${build.dir}"/>
-
-
             <formatter type="brief" usefile="false"/>
-
             <batchtest haltonerror="true">
-
                 <fileset dir="${build.dir}" includes="**/*Test.class">
-
                 </fileset>
-
             </batchtest>
         </junit>
+        
     </target>
 
 

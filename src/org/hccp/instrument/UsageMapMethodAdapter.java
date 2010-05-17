@@ -29,12 +29,10 @@ public class UsageMapMethodAdapter extends MethodAdapter {
     public void visitCode() {
         super.visitCode();
 
+        super.visitMethodInsn(Opcodes.INVOKESTATIC, "org/hccp/instrument/UsageCounter", "getInstance", "()Lorg/hccp/instrument/UsageCounter;");
+        super.visitLdcInsn(getFullyQualifiedMethodName(className, methodName, methodDescriptor));
+        super.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "org/hccp/instrument/UsageCounter", "incrementCountForMethod", "(Ljava/lang/String;)V");
 
-        if (!"org/hccp/instrument/UsageCounter".equals(className) && !className.startsWith("java/") && !className.startsWith("sun/")) {
-            super.visitMethodInsn(Opcodes.INVOKESTATIC, "org/hccp/instrument/UsageCounter", "getInstance", "()Lorg/hccp/instrument/UsageCounter;");
-            super.visitLdcInsn(getFullyQualifiedMethodName(className, methodName, methodDescriptor));
-            super.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "org/hccp/instrument/UsageCounter", "incrementCountForMethod", "(Ljava/lang/String;)V");
-        }
     }
 
     private String getFullyQualifiedMethodName(String className, String methodName, String methodDescriptor) {
